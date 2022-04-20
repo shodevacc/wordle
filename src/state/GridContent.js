@@ -32,7 +32,7 @@ export const GridContextProvider = ({ children }) => {
         }
         // const wrongPosition = word.charAt(index)
         const correctPosition = letter === setword.charAt(index)
-        console.log(letter, setword,correctPosition)
+        // console.log(letter, setword,correctPosition)
         if (correctPosition) {
             return correctColor
         }
@@ -44,7 +44,7 @@ export const GridContextProvider = ({ children }) => {
         
     // }
     const handleSubmit = () => {
-        console.log(getCurrentWord())
+        // console.log(getCurrentWord())
        
 
         if (checkIfWordComplete()) {
@@ -56,7 +56,7 @@ export const GridContextProvider = ({ children }) => {
                 // console.log(currentWord,letter,guessedWords.length-1,(guessedWords.length-1)*5,index)
                 tile.style.background = color;
             })
-            
+
             if (getCurrentWordString().toLowerCase() === setword.toLowerCase()) {
                 window.alert(`Congratulations, you've won!`);
             }
