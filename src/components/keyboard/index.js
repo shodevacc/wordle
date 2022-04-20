@@ -67,7 +67,7 @@ const BackSpaceIcon = () => <Icon style={{ zIndex: '2' }} xmlns="http://www.w3.o
 const Button = ({ children, attribute }) => {
     const btnRef = React.useRef(null);
     const { guessedWords,updateGuessedWords, handleSubmit } = useGridState();
-    console.log("currentword",guessedWords)
+    // console.log("currentword",guessedWords)
 
     // console.log("pos", currentPos)
     const handleClick = () => {

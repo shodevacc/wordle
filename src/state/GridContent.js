@@ -1,5 +1,5 @@
 import React from 'react'
-import { row, column } from './config'
+import { row, column, setword, wrongColor, correctColor, wrongPositionColor } from './config'
 
 const GridContext = React.createContext();
 
@@ -18,12 +18,52 @@ export const GridContextProvider = ({ children }) => {
     const getCurrentWord = () => {
         return guessedWords[guessedWords.length - 1]
     }
+    const getCurrentWordString = ()=>{
+        return guessedWords[guessedWords.length - 1].join('')
+    }
     const checkIfWordComplete = () => {
         return getCurrentWord().length === column;
     }
+    const getTileColor = (setword,letter, index) => {
+        // console.log("ENETRED",setword,letter,index);
+        const correctLetter = setword.includes(letter);
+        if (!correctLetter) {
+            return wrongColor
+        }
+        // const wrongPosition = word.charAt(index)
+        const correctPosition = letter === setword.charAt(index)
+        console.log(letter, setword,correctPosition)
+        if (correctPosition) {
+            return correctColor
+        }
+        else {
+            return wrongPositionColor
+        }
+    }
+    // const validateWord =(word)=>{
+        
+    // }
     const handleSubmit = () => {
+        console.log(getCurrentWord())
+       
+
         if (checkIfWordComplete()) {
             console.log("word completed")
+            const currentWord = getCurrentWord()
+            currentWord.forEach((letter,index)=>{
+                const color = getTileColor(setword.toLowerCase(),letter.toLowerCase(),index)
+                const tile = document.querySelector(`#grid-item-${((guessedWords.length-1)*5+index)}`)
+                // console.log(currentWord,letter,guessedWords.length-1,(guessedWords.length-1)*5,index)
+                tile.style.background = color;
+            })
+            
+            if (getCurrentWordString().toLowerCase() === setword.toLowerCase()) {
+                window.alert(`Congratulations, you've won!`);
+            }
+            if (guessedWords.length === row) {
+                window.alert(`Unforutnately, you've lost! The word was ${setword}`);
+            }
+           
             setGuessedWords(state => {
                 return [...state, []]
             })
