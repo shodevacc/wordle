@@ -64,9 +64,9 @@ const BackSpaceIcon = () => <Icon style={{ zIndex: '2' }} xmlns="http://www.w3.o
 
 
 
-const Button = ({ children, attribute }) => {
+const Button = ({ children, id, attribute }) => {
     const btnRef = React.useRef(null);
-    const { guessedWords,updateGuessedWords, handleSubmit } = useGridState();
+    const { updateGuessedWords, handleSubmit } = useGridState();
     // console.log("currentword",guessedWords)
 
     // console.log("pos", currentPos)
@@ -99,7 +99,7 @@ const Button = ({ children, attribute }) => {
         })
     }, [updateGuessedWords])
     return (
-        <button ref={btnRef}>
+        <button id={id} ref={btnRef}>
             {attribute ?
                 children
                 : <p>
@@ -116,7 +116,7 @@ const OutputLetters = ({ input }) => {
             {input.split('').map((letter, key) => {
                 return (
                     <React.Fragment key={`button-${key}`}>
-                        <Button>{letter}</Button>
+                        <Button id={`button-${letter}`}>{letter}</Button>
                     </React.Fragment>
                 )
             })}
@@ -139,9 +139,9 @@ function Index() {
                 <OutputLetters input={secondrow} />
             </Row>
             <Row>
-                <Button>Enter</Button>
+                <Button id="button-enter">Enter</Button>
                 <OutputLetters input={thirdrow} />
-                <Button attribute="del">
+                <Button id="button-del" attribute="del">
                     <BackSpaceIcon />
                 </Button>
             </Row>

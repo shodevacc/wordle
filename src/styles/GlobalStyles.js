@@ -17,18 +17,18 @@ const GlobalStyle = createGlobalStyle`
     border: 2px solid #3a3a3c;
   }
   .correctTile{
-    background: #538d4e;
+    background: #538d4e !important;
     border: none;
   }
   .wrongTile{
-    background: #3a3a3c;
+    background: #3a3a3c !important;
     border: none;
   }
   .inputTile{
     border-color:#565758;
   }
   .wrongPosTile{
-    background: #b59f3b;
+    background: #b59f3b !important;
     border: none;
   }
 `

@@ -12,49 +12,57 @@ const createArray = (row, column) => {
 export const GridContextProvider = ({ children }) => {
     const array = createArray(row, column);
     const [guessedWords, setGuessedWords] = React.useState([[]]);
+    const [gameOver, setGameOver] = React.useState(false);
 
     const [currentPos, setCurrentPos] = React.useState(0);
 
     const getCurrentWord = () => {
         return guessedWords[guessedWords.length - 1]
     }
-    const getCurrentWordString = ()=>{
+    const getCurrentWordString = () => {
         return guessedWords[guessedWords.length - 1].join('')
     }
     const checkIfWordComplete = () => {
         return getCurrentWord().length === column;
     }
-    const getTileColor = (setword,letter, index) => {
+
+    const getColors = (setword, letter, index, key) => {
         // console.log("ENETRED",setword,letter,index);
         const correctLetter = setword.includes(letter);
         if (!correctLetter) {
-            return wrongColor
+            return [`wrongTile`, `wrongTile`]
         }
         // const wrongPosition = word.charAt(index)
         const correctPosition = letter === setword.charAt(index)
         // console.log(letter, setword,correctPosition)
         if (correctPosition) {
-            return correctColor
+            return [`correctTile`, `correctTile`]
         }
         else {
-            return wrongPositionColor
+            if (!key.classList.contains(`correctTile`))
+                return ['wrongPosTile', 'wrongPosTile']
+            return ['wrongPosTile', 'correctTile']
         }
     }
+
     // const validateWord =(word)=>{
-        
+
     // }
     const handleSubmit = () => {
         // console.log(getCurrentWord())
-       
-
         if (checkIfWordComplete()) {
             console.log("word completed")
             const currentWord = getCurrentWord()
-            currentWord.forEach((letter,index)=>{
-                const color = getTileColor(setword.toLowerCase(),letter.toLowerCase(),index)
-                const tile = document.querySelector(`#grid-item-${((guessedWords.length-1)*5+index)}`)
+            currentWord.forEach((letter, index) => {
+
+                const tile = document.querySelector(`#grid-item-${((guessedWords.length - 1) * column + index)}`)
+                const key = document.querySelector(`#button-${letter.toLowerCase()}`)
+                const [tilecolor, keycolor] = getColors(setword.toLowerCase(), letter.toLowerCase(), index, key)
+                // console.log("colors", tilecolor, keycolor)
+                key.className = ""
+                key.classList.add(keycolor);
                 // console.log(currentWord,letter,guessedWords.length-1,(guessedWords.length-1)*5,index)
-                tile.style.background = color;
+                tile.classList.add(tilecolor);
             })
 
             if (getCurrentWordString().toLowerCase() === setword.toLowerCase()) {
@@ -62,17 +70,25 @@ export const GridContextProvider = ({ children }) => {
             }
             if (guessedWords.length === row) {
                 window.alert(`Unforutnately, you've lost! The word was ${setword}`);
+                setGameOver(true);
             }
-           
+
             setGuessedWords(state => {
                 return [...state, []]
             })
+        }
+        else if (gameOver) {
+            window.alert("Your game is completed! Reload to try again")
         }
         else {
             window.alert("not completed")
         }
     }
     const updateGuessedWords = (letter, decrement = false) => {
+        if (gameOver) {
+            window.alert("Your game is completed! Reload to try again")
+            return
+        }
         if (!decrement && getCurrentWord().length < column) {
             setGuessedWords((state) => {
                 return state.map((word, index) => {
@@ -109,14 +125,9 @@ export const GridContextProvider = ({ children }) => {
         }
     }
 
-    const validateWord = () => {
-        const word = getCurrentWord();
-        console.log("SUBMIT", word)
-    }
-
 
     return (
-        <GridContext.Provider value={{ row, column, array, getCurrentWord, currentPos, validateWord, setCurrentPos, updateGuessedWords, guessedWords, handleSubmit }}>
+        <GridContext.Provider value={{ row, column, array, getCurrentWord, currentPos, setCurrentPos, updateGuessedWords, guessedWords, handleSubmit }}>
             {children}
         </GridContext.Provider>
     )
