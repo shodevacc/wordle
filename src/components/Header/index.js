@@ -10,6 +10,7 @@ const Container = styled.div`
     width: 100vw;
     text-align: center;
     margin: 0 0 20px 0;
+    padding: 0 10px;
 
     p{
         color:#fff;
