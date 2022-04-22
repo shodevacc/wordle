@@ -69,7 +69,7 @@ export const GridContextProvider = ({ children }) => {
                 window.alert(`Congratulations, you've won!`);
             }
             else if (guessedWords.length === row) {
-                window.alert(`Unforutnately, you've lost! The word was ${setword}`);
+                window.alert(`Unforutnately, you've lost! The word was "${setword.toUpperCase()}"`);
                 setGameOver(true);
             }
 

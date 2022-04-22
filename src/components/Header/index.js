@@ -14,6 +14,7 @@ const Container = styled.div`
 
     p{
         color:#fff;
+        text-transform: capitalize;
     }
 `
 function index() {
