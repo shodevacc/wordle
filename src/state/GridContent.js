@@ -50,7 +50,7 @@ export const GridContextProvider = ({ children }) => {
     // }
     const handleSubmit = () => {
         // console.log(getCurrentWord())
-        if (checkIfWordComplete()) {
+        if (checkIfWordComplete() && !gameOver) {
             console.log("word completed")
             const currentWord = getCurrentWord()
             currentWord.forEach((letter, index) => {
@@ -66,11 +66,13 @@ export const GridContextProvider = ({ children }) => {
             })
 
             if (getCurrentWordString().toLowerCase() === setword.toLowerCase()) {
+                setGameOver(true);
                 window.alert(`Congratulations, you've won!`);
             }
             else if (guessedWords.length === row) {
-                window.alert(`Unforutnately, you've lost! The word was "${setword.toUpperCase()}"`);
                 setGameOver(true);
+                window.alert(`Unforutnately, you've lost! The word was "${setword.toUpperCase()}"`);
+               
             }
 
             setGuessedWords(state => {
