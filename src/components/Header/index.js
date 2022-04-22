@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
+import { question } from '../../state/config'
 
 const Container = styled.div`
     height: ${({ theme }) => theme.constant.navHeight};
@@ -17,7 +18,7 @@ const Container = styled.div`
 function index() {
     return (
         <Container>
-            <p>Wordle</p>
+            <p>{question}</p>
         </Container>
     )
 }

@@ -22,6 +22,7 @@ const GlobalStyle = createGlobalStyle`
   }
   .wrongTile{
     background: #3a3a3c !important;
+    pointer-events:none;
     border: none;
   }
   .inputTile{
